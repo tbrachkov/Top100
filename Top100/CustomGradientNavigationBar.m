@@ -22,8 +22,8 @@ static CGFloat const kDefaultOpacity = 0.5f;
 
 - (void)setBarTintGradientColors:(NSArray *)barTintGradientColors
 {
-    // create the gradient layer
-    if (self.gradientLayer == nil) {
+    if (self.gradientLayer == nil)
+    {
         self.gradientLayer = [CAGradientLayer layer];
         self.gradientLayer.opacity = self.translucent ? kDefaultOpacity : 1.0f;
     }
@@ -34,15 +34,14 @@ static CGFloat const kDefaultOpacity = 0.5f;
         colors = [NSMutableArray arrayWithCapacity:[barTintGradientColors count]];
         
         
-        [barTintGradientColors enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [barTintGradientColors enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+         {
             if ([obj isKindOfClass:[UIColor class]])
             {
-                // UIColor class
                 [colors addObject:(id)[obj CGColor]];
             }
             else if ( CFGetTypeID( (__bridge void *)obj ) == CGColorGetTypeID() )
             {
-                // CGColorRef
                 [colors addObject:obj];
             }
             else
@@ -74,12 +73,10 @@ static CGFloat const kDefaultOpacity = 0.5f;
 {
     [super layoutSubviews];
     
-    // allow all layout subviews call to adjust the frame
     if ( self.gradientLayer != nil )
     {
         if ( floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1 )
         {
-            // iOS 7
             self.gradientLayer.startPoint = CGPointMake(0.0, 0.5);
             self.gradientLayer.endPoint = CGPointMake(1.0, 0.5);
             
@@ -88,11 +85,9 @@ static CGFloat const kDefaultOpacity = 0.5f;
         }
         else
         {
-            // iOS 6
             self.gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
         }
         
-        // make sure the graident layer is at position 1
         [self.layer insertSublayer:self.gradientLayer atIndex:1];
     }
 }
